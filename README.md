@@ -1,4 +1,4 @@
-# Выполнение тестового задания PickPoint. Backend.
+# Выполнение тестового задания PickPoint.Backend.
 > Подробности реализации и заложенные сценарии в [Wiki](https://github.com/Trosh-A/PickPoint.back/wiki/Общие-сведения)
 
 ## Задание
