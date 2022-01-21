@@ -36,7 +36,7 @@ public class StoresAuth : IStoresAuth
       {
         claims.Add(new Claim(ClaimTypes.Role, role));
       }
-      return (lqm.INN, _jwtGenerator.CreateToken(claims, TimeSpan.FromDays(365)), roles, Enumerable.Empty<string>());
+      return (lqm.INN, _jwtGenerator.CreateToken(claims, TimeSpan.FromDays(1)), roles, Enumerable.Empty<string>());
     }
     var errors = new List<string>() { "Некорректный логин/пароль" };
     return (string.Empty, string.Empty, Enumerable.Empty<string>(), errors);
