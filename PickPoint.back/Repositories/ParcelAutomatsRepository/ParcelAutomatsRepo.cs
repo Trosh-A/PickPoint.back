@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PickPoint.back.EFCore;
 using PickPoint.back.Models.ParcelAutomatModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PickPoint.back.Repositories.ParcelAutomatsRepository;
@@ -13,16 +10,12 @@ namespace PickPoint.back.Repositories.ParcelAutomatsRepository;
 public class ParcelAutomatsRepo : IParcelAutomatsRepo
 {
   private readonly AppDbContext _ctx;
-  private readonly Guid? storeGuid = null;
-  public ParcelAutomatsRepo(AppDbContext ctx, IHttpContextAccessor httpContextAccessor)
+  public ParcelAutomatsRepo(AppDbContext ctx)
   {
     _ctx = ctx;
-    var storeGuidString = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-    if (Guid.TryParse(storeGuidString, out Guid storeGuidTemp)) storeGuid = storeGuidTemp;
   }
   public async Task<IEnumerable<ParcelAutomat>> GetOrderedWorkingParcelAutomatsAsync()
   {
-    if (storeGuid is null) return Enumerable.Empty<ParcelAutomat>();
     return await _ctx.ParcelAutomats.AsNoTracking().Where(pa => pa.IsWorking).OrderBy(pa => pa.Index).ToListAsync();
   }
   //Ограничения, что получить информацию о конкретном постамате можно только, если он рабочий в задании нет.
