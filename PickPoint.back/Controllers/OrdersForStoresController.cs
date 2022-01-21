@@ -9,7 +9,6 @@ using PickPoint.back.Models.OrderModel;
 using PickPoint.back.Models.OrderModel.ForOnlineStore;
 using PickPoint.back.Repositories.OrdersRepository;
 using PickPoint.back.Repositories.ParcelAutomatsRepository;
-using System;
 using System.Threading.Tasks;
 
 #pragma warning disable CA2254 // Template should be a static expression
@@ -44,16 +43,16 @@ public class OrdersForStoresController : ControllerBase
   }
 
   // GET: api/orders/{id}
-  [HttpGet("{id:guid}")]
-  public async Task<ActionResult<OrderOnlineStoreReadDTO>> GetOrderByIdAsync(Guid id)
+  [HttpGet("{number:int}")]
+  public async Task<ActionResult<OrderOnlineStoreReadDTO>> GetOrderByIdAsync(int number)
   {
-    var order = await _ordersRepo.GetOrderByGuidAuthAsync(id);
+    var order = await _ordersRepo.GetOrderByNumberAuthAsync(number);
     if (order is not null)
     {
-      _logger.LogInformation($"Запрошен заказ с номером: {id}");
+      _logger.LogInformation($"Запрошен заказ с номером: {number}");
       return Ok(_mapper.Map<OrderOnlineStoreReadDTO>(order));
     }
-    _logger.LogInformation($"Запрошенный заказ с id: {id} не найден");
+    _logger.LogInformation($"Запрошенный заказ с номером: {number} не найден");
     return NotFound();
   }
 
@@ -79,14 +78,14 @@ public class OrdersForStoresController : ControllerBase
     return StatusCode(201, orderReadDto);
   }
 
-  [HttpPut("{id:guid}")]
-  public async Task<ActionResult<OrderOnlineStoreReadDTO>> UpdateOrderAsync(Guid id, OrderOnlineStoreUpdateDto orderUpdateDto)
+  [HttpPut("{number:int}")]
+  public async Task<ActionResult<OrderOnlineStoreReadDTO>> UpdateOrderAsync(int number, OrderOnlineStoreUpdateDto orderUpdateDto)
   {
     if (orderUpdateDto is null)
     {
       return BadRequest();
     }
-    var orderModelFromRepo = await _ordersRepo.GetOrderByGuidAuthAsync(id);
+    var orderModelFromRepo = await _ordersRepo.GetOrderByNumberAuthAsync(number);
     if (orderModelFromRepo is null)
     {
       return NotFound();
@@ -104,10 +103,10 @@ public class OrdersForStoresController : ControllerBase
     return Ok(orderReadDto);
   }
 
-  [HttpPost("cancel/{id:guid}")]
-  public async Task<IActionResult> CancelOrderAsync(Guid id)
+  [HttpPost("cancel/{number:int}")]
+  public async Task<IActionResult> CancelOrderAsync(int number)
   {
-    var orderModelFromRepo = await _ordersRepo.CancelOrderAuthAsync(id);
+    var orderModelFromRepo = await _ordersRepo.CancelOrderAuthAsync(number);
     if (orderModelFromRepo is null)
     {
       return NotFound();
