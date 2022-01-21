@@ -15,6 +15,7 @@ namespace PickPoint.back.Controllers;
 [AllowAnonymous]
 [ApiVersion("1.0")]
 [Route("api")]
+[Produces("application/json")]
 [ApiController]
 public class StoresAuthController : ControllerBase
 {

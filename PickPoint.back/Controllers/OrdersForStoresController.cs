@@ -18,6 +18,7 @@ namespace PickPoint.back.Controllers;
 [ApiVersion("1.0")]
 [Route("api/orders")]
 [Authorize(Roles = RolesConstants.ACTIVE)]
+[Produces("application/json")]
 [ApiController]
 public class OrdersForStoresController : ControllerBase
 {

@@ -10,6 +10,7 @@ namespace PickPoint.back.Controllers;
 [Authorize(Roles = RolesConstants.PICKPOINT_MANAGER)]
 [ApiVersion("1.0")]
 [Route("api")]
+[Produces("application/json")]
 [ApiController]
 public class StoresManagementController : ControllerBase
 {

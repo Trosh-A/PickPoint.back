@@ -17,6 +17,7 @@ namespace PickPoint.back.Controllers;
 [ApiVersion("1.0")]
 [Route("api/parcel-automats")]
 [Authorize()]
+[Produces("application/json")]
 [ApiController]
 public class ParcelAutomatsController : ControllerBase
 {
